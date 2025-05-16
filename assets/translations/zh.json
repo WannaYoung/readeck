@@ -1,0 +1,13 @@
+{
+  "home_title": "首页",
+  "login": "登录",
+  "register": "注册",
+  "theme": "主题切换",
+  "language": "语言切换",
+  "email": "电子邮件",
+  "password": "密码",
+  "logout": "退出登录",
+  "readlist": "稍后读列表",
+  "add": "添加",
+  "delete": "删除"
+} 

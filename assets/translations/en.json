@@ -1,0 +1,13 @@
+{
+  "home_title": "Home",
+  "login": "Login",
+  "register": "Register",
+  "theme": "Theme Switch",
+  "language": "Language Switch",
+  "email": "Email",
+  "password": "Password",
+  "logout": "Logout",
+  "readlist": "Read Later List",
+  "add": "Add",
+  "delete": "Delete"
+} 
