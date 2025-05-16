@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_menu/pie_menu.dart';
 import '../data/models/bookmark.dart';
@@ -94,7 +95,7 @@ class ArticleCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 14, color: Colors.black87)),
+                            fontSize: 13, color: Colors.black87)),
                   ],
                   const SizedBox(height: 10),
                   Row(
@@ -102,13 +103,12 @@ class ArticleCard extends StatelessWidget {
                       if (bookmark.iconUrl != null)
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
+                          child: ExtendedImage.network(
+                            cache: true,
                             bookmark.iconUrl!,
                             width: 20,
                             height: 20,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) =>
-                                const Icon(Icons.article, size: 16),
                           ),
                         ),
                       if (bookmark.iconUrl != null) const SizedBox(width: 5),

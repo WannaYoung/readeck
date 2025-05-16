@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pie_menu/pie_menu.dart';
 import 'package:readeck/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
@@ -95,9 +96,13 @@ class HomeView extends GetView<HomeController> {
                       itemBuilder: (context, index) {
                         if (index == controller.articles.length) {
                           if (controller.isLoadingMore.value) {
-                            return const Padding(
+                            return Padding(
                               padding: EdgeInsets.symmetric(vertical: 16),
-                              child: Center(child: CircularProgressIndicator()),
+                              child: Center(
+                                  child: LoadingAnimationWidget.discreteCircle(
+                                      color:
+                                          const Color.fromARGB(255, 67, 67, 67),
+                                      size: 30)),
                             );
                           } else {
                             return const SizedBox.shrink();
@@ -121,7 +126,6 @@ class HomeView extends GetView<HomeController> {
                                     bookmark, !(bookmark.isArchived));
                                 break;
                               case 2: // 分享
-                                // TODO: 分享逻辑
                                 break;
                               case 3: // 删除
                                 controller.deleteBookmark(bookmark);

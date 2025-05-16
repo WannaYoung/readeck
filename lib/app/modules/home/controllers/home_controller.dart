@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../../../data/providers/bookmark_provider.dart';
 import '../../../data/models/bookmark.dart';
@@ -51,6 +52,7 @@ class HomeController extends GetxController {
       isLoadingMore.value = true;
     }
     try {
+      EasyLoading.show();
       // 构建筛选参数
       Map<String, dynamic> params = {
         'limit': _limit,
@@ -75,6 +77,7 @@ class HomeController extends GetxController {
     } catch (e) {
       // 错误处理
     } finally {
+      EasyLoading.dismiss();
       loading.value = false;
       isLoadingMore.value = false;
     }

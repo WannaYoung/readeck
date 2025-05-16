@@ -7,6 +7,8 @@ class ReadingController extends GetxController {
 
   final markdown = ''.obs;
   final loading = false.obs;
+  final showAppBar = true.obs;
+  final lastOffset = 0.0.obs; // 滚动偏移
 
   late String articleId;
 
@@ -35,5 +37,16 @@ class ReadingController extends GetxController {
     } finally {
       loading.value = false;
     }
+  }
+
+  /// 滚动监听，控制AppBar显隐
+  void handleScroll(double offset) {
+    double delta = offset - lastOffset.value;
+    if (delta > 1 && showAppBar.value) {
+      showAppBar.value = false;
+    } else if (delta < -1 && !showAppBar.value) {
+      showAppBar.value = true;
+    }
+    lastOffset.value = offset;
   }
 }
