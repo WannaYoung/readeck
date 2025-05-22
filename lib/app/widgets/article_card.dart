@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:pie_menu/pie_menu.dart';
 import '../data/models/bookmark.dart';
@@ -45,7 +46,7 @@ class ArticleCard extends StatelessWidget {
         },
         actions: [
           PieAction(
-            tooltip: Text(bookmark.isMarked ? '取消收藏' : '收藏'),
+            tooltip: Text(bookmark.isMarked ? '取消收藏'.tr : '收藏'.tr),
             onSelect: () => onPieAction?.call(0),
             buttonTheme:
                 bookmark.isMarked ? favoriteButtonTheme : pieButtonTheme,
@@ -53,7 +54,7 @@ class ArticleCard extends StatelessWidget {
             child: const Icon(Icons.favorite),
           ),
           PieAction(
-            tooltip: Text(bookmark.isArchived ? '取消归档' : '归档'),
+            tooltip: Text(bookmark.isArchived ? '取消归档'.tr : '归档'.tr),
             onSelect: () => onPieAction?.call(1),
             buttonTheme:
                 bookmark.isArchived ? archiveButtonTheme : pieButtonTheme,
@@ -61,14 +62,14 @@ class ArticleCard extends StatelessWidget {
             child: const Icon(Icons.archive),
           ),
           PieAction(
-            tooltip: const Text('分享'),
+            tooltip: Text('分享'.tr),
             onSelect: () => onPieAction?.call(2),
             buttonTheme: pieButtonTheme,
             buttonThemeHovered: pieButtonThemeHovered,
             child: const Icon(Icons.share),
           ),
           PieAction(
-            tooltip: const Text('删除'),
+            tooltip: Text('删除'.tr),
             onSelect: () => onPieAction?.call(3),
             buttonTheme: pieButtonTheme,
             buttonThemeHovered: PieButtonTheme(
@@ -79,11 +80,11 @@ class ArticleCard extends StatelessWidget {
           ),
         ],
         child: Material(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(6),
           elevation: 0,
           child: InkWell(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(6),
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -95,11 +96,9 @@ class ArticleCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          bookmark.title,
+                          bookmark.title ?? '',
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.black),
+                              fontWeight: FontWeight.bold, fontSize: 17),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -111,8 +110,7 @@ class ArticleCard extends StatelessWidget {
                     Text(bookmark.description!,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontSize: 13, color: Colors.black87)),
+                        style: const TextStyle(fontSize: 13)),
                   ],
                   const SizedBox(height: 10),
                   Row(
@@ -130,10 +128,13 @@ class ArticleCard extends StatelessWidget {
                         ),
                       if (bookmark.iconUrl != null) const SizedBox(width: 5),
                       if ((bookmark.site ?? '').isNotEmpty)
-                        Text(bookmark.site!,
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.grey)),
-                      const Spacer(),
+                        Expanded(
+                            child: Text(bookmark.site!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey))),
+                      const SizedBox(width: 10),
                       if ((bookmark.created ?? '').isNotEmpty)
                         Text(bookmark.created!,
                             style: const TextStyle(

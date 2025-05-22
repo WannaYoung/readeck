@@ -4,41 +4,61 @@ import 'package:get_storage/get_storage.dart';
 
 class LocalizationService extends GetxService {
   static final langs = [
-    '中文',
+    '简体中文',
+    '繁体中文',
     'English',
   ];
 
   static final locales = [
-    const Locale('zh'),
-    const Locale('en'),
+    const Locale('zh', 'CN'),
+    const Locale('zh', 'TW'),
+    const Locale('en', 'US'),
   ];
 
-  void changeLocale(String lang) {
-    final locale = _getLocaleFromLanguage(lang);
-    Get.updateLocale(locale);
-    GetStorage().write('locale', locale.languageCode);
-  }
-
-  Locale _getLocaleFromLanguage(String lang) {
-    switch (lang) {
-      case '中文':
-        return const Locale('zh');
-      case 'English':
-        return const Locale('en');
-      default:
-        return const Locale('zh');
-    }
-  }
-}
-
-class ThemeService {
   final _box = GetStorage();
-  final _key = 'isDark';
+  final _key = 'locale';
 
-  bool get isDarkMode => _box.read(_key) ?? false;
+  /// 获取当前Locale
+  Locale getCurrentLocale() {
+    String? code = _box.read(_key);
+    if (code == 'zh_CN') return const Locale('zh', 'CN');
+    if (code == 'zh_TW') return const Locale('zh', 'TW');
+    if (code == 'en_US') return const Locale('en', 'US');
+    return _getLocaleFromDevice();
+  }
 
-  void switchTheme() {
-    Get.changeThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
-    _box.write(_key, !isDarkMode);
+  /// 根据设备语言自动匹配
+  Locale _getLocaleFromDevice() {
+    final deviceLocale = Get.deviceLocale;
+    if (deviceLocale == null) return const Locale('en', 'US');
+    if (deviceLocale.languageCode == 'zh') {
+      if (deviceLocale.countryCode == 'TW' ||
+          deviceLocale.scriptCode == 'Hant') {
+        return const Locale('zh', 'TW');
+      }
+      return const Locale('zh', 'CN');
+    }
+    return const Locale('en', 'US');
+  }
+
+  /// 切换语言并持久化
+  void changeLocale(String lang) {
+    Locale locale;
+    switch (lang) {
+      case '简体中文':
+        locale = const Locale('zh', 'CN');
+        _box.write(_key, 'zh_CN');
+        break;
+      case '繁体中文':
+        locale = const Locale('zh', 'TW');
+        _box.write(_key, 'zh_TW');
+        break;
+      case 'English':
+      default:
+        locale = const Locale('en', 'US');
+        _box.write(_key, 'en_US');
+        break;
+    }
+    Get.updateLocale(locale);
   }
 }

@@ -3,35 +3,43 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:readeck/app/data/translations.dart';
 import 'app/routes/app_pages.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'app/data/localization_service.dart';
+import 'app/data/theme_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final box = GetStorage();
   final hasToken = box.read('token') != null;
+
+  // 初始化本地化服务
+  final localizationService = LocalizationService();
+  final themeService = ThemeService();
+
   runApp(GetMaterialApp(
     title: "Readeck",
     getPages: AppPages.routes,
     builder: combineBuilder,
     debugShowCheckedModeBanner: false,
     initialRoute: hasToken ? Routes.HOME : Routes.LOGIN,
-    theme: ThemeData(
-      fontFamily: 'NotoSerifSC',
-      primaryColor: const Color(0xFF000000),
-      colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF000000)),
-    ),
+    theme: themeService.currentTheme,
     translations: AppTranslations(),
-    locale: Get.deviceLocale,
+    locale: localizationService.getCurrentLocale(),
     localizationsDelegates: const [
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
       GlobalCupertinoLocalizations.delegate,
     ],
     fallbackLocale: const Locale('zh', 'CN'),
-    supportedLocales: const [Locale('zh', 'CN'), Locale('en', 'US')],
+    supportedLocales: const [
+      Locale('zh', 'CN'),
+      Locale('zh', 'TW'),
+      Locale('en', 'US')
+    ],
   ));
 
   Get.config(

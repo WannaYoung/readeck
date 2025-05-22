@@ -18,7 +18,7 @@ class LoginController extends GetxController {
     final username = usernameController.text.trim();
     final password = passwordController.text;
     if (server.isEmpty || username.isEmpty || password.isEmpty) {
-      Get.snackbar('错误', '请填写完整信息');
+      Get.snackbar('错误'.tr, '请填写完整信息'.tr);
       return;
     }
     box.write('server', server);
@@ -33,10 +33,10 @@ class LoginController extends GetxController {
         box.write('id', res['id']);
         Get.offAllNamed('/home');
       } else {
-        Get.snackbar('登录失败', '无效响应');
+        Get.snackbar('登录失败'.tr, '无效响应'.tr);
       }
     } catch (e) {
-      Get.snackbar('登录失败', e.toString());
+      Get.snackbar('登录失败'.tr, e.toString());
     }
   }
 

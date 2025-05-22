@@ -23,8 +23,6 @@ class HomeController extends GetxController {
     {'icon': Icons.archive_outlined, 'title': '归档'},
     {'icon': Icons.favorite_border, 'title': '收藏'},
     {'icon': Icons.video_library_outlined, 'title': '视频'},
-    {'icon': Icons.highlight_alt_outlined, 'title': '高亮'},
-    {'icon': Icons.label_outline, 'title': '标签'},
   ];
 
   // 筛选条件
@@ -85,7 +83,7 @@ class HomeController extends GetxController {
 
   Future<void> markBookmark(Bookmark bookmark, bool value) async {
     try {
-      await provider.updateBookmarkStatus(bookmark.id, isMarked: value);
+      await provider.updateBookmarkStatus(bookmark.id ?? '', isMarked: value);
 
       // 如果在收藏列表中取消收藏，直接移除
       if (filterIsMarked == true && !value) {
@@ -106,7 +104,7 @@ class HomeController extends GetxController {
 
   Future<void> archiveBookmark(Bookmark bookmark, bool value) async {
     try {
-      await provider.updateBookmarkStatus(bookmark.id, isArchived: value);
+      await provider.updateBookmarkStatus(bookmark.id ?? '', isArchived: value);
 
       // 如果在归档列表中取消归档，直接移除
       if (filterIsArchived == true && !value) {
@@ -127,7 +125,7 @@ class HomeController extends GetxController {
 
   Future<void> deleteBookmark(Bookmark bookmark) async {
     try {
-      await provider.deleteBookmark(bookmark.id);
+      await provider.deleteBookmark(bookmark.id ?? '');
       articles.removeWhere((b) => b.id == bookmark.id);
       articles.refresh();
       Get.snackbar('成功'.tr, '已删除'.tr);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String title;
@@ -59,7 +60,7 @@ class CustomAlertDialog extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        '取消',
+                        '取消'.tr,
                         style: TextStyle(color: Colors.grey[700]!),
                       ),
                     ),
@@ -78,9 +79,9 @@ class CustomAlertDialog extends StatelessWidget {
                       color: confirmButtonColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        '删除',
+                        confirmButtonText,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

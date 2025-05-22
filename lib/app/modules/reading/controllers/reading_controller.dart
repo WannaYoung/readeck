@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:readeck/app/data/models/bookmark.dart';
+import 'package:readeck/app/modules/home/controllers/home_controller.dart';
 import '../../../data/providers/bookmark_provider.dart';
 
 class ReadingController extends GetxController {
@@ -9,14 +11,16 @@ class ReadingController extends GetxController {
   final loading = false.obs;
   final showAppBar = true.obs;
   final lastOffset = 0.0.obs; // 滚动偏移
-  final isReady = false.obs; // 是否准备好显示内容
+  final isReady = false.obs;
+  final article = Bookmark().obs;
 
   late String articleId;
 
   @override
   void onInit() {
     super.onInit();
-    articleId = Get.parameters['id'] ?? '';
+    article.value = Get.arguments['bookmark'] as Bookmark;
+    articleId = article.value.id ?? '';
     if (articleId.isNotEmpty) {
       // 延迟一帧再加载，让页面先显示出来
       Future.microtask(() => fetchMarkdown());
@@ -55,6 +59,28 @@ class ReadingController extends GetxController {
     } finally {
       loading.value = false;
     }
+  }
+
+  void clickFavorite() {
+    final homeController = Get.find<HomeController>();
+    homeController
+        .markBookmark(article.value, !article.value.isMarked)
+        .then((_) {
+      article.update((val) {
+        val?.isMarked = !article.value.isMarked;
+      });
+    });
+  }
+
+  void clickArchive() {
+    final homeController = Get.find<HomeController>();
+    homeController
+        .archiveBookmark(article.value, !article.value.isArchived)
+        .then((_) {
+      article.update((val) {
+        val?.isArchived = !article.value.isArchived;
+      });
+    });
   }
 
   /// 滚动监听，控制AppBar显隐

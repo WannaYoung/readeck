@@ -1,19 +1,19 @@
 class Bookmark {
-  final String id;
-  final String title;
-  final String? description;
-  final String? site;
-  final String? iconUrl;
-  final String? articleUrl;
-  final String? created;
-  final String? updated;
-  final bool isMarked;
-  final bool isArchived;
-  final bool isDeleted;
+  String? id;
+  String? title;
+  String? description;
+  String? site;
+  String? iconUrl;
+  String? articleUrl;
+  String? created;
+  String? updated;
+  bool isMarked;
+  bool isArchived;
+  bool isDeleted;
 
   Bookmark({
-    required this.id,
-    required this.title,
+    this.id,
+    this.title,
     this.description,
     this.site,
     this.iconUrl,
