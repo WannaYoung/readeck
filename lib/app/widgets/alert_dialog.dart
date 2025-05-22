@@ -24,7 +24,6 @@ class CustomAlertDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       elevation: 8.0,
-      backgroundColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -35,7 +34,6 @@ class CustomAlertDialog extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 16),
@@ -43,7 +41,6 @@ class CustomAlertDialog extends StatelessWidget {
               description,
               style: TextStyle(
                 fontSize: 15,
-                color: Colors.black45,
               ),
             ),
             const SizedBox(height: 24),
@@ -55,13 +52,13 @@ class CustomAlertDialog extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey[300]!),
+                      border: Border.all(
+                          color: const Color.fromARGB(186, 137, 137, 137)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Center(
                       child: Text(
                         '取消'.tr,
-                        style: TextStyle(color: Colors.grey[700]!),
                       ),
                     ),
                   ),
@@ -82,7 +79,6 @@ class CustomAlertDialog extends StatelessWidget {
                     child: Center(
                       child: Text(
                         confirmButtonText,
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),

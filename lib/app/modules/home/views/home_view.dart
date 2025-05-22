@@ -29,6 +29,9 @@ class HomeView extends GetView<HomeController> {
     });
 
     return PieCanvas(
+      theme: PieTheme(
+        brightness: theme.brightness,
+      ),
       child: Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: _buildAppBar(theme),

@@ -8,17 +8,11 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
         title: Text('Readeck'.tr,
-            style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 28)),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 28)),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -80,6 +74,17 @@ class LoginView extends GetView<LoginController> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(color: theme.primaryColor),
+        ),
+        suffixIcon: ValueListenableBuilder<TextEditingValue>(
+          valueListenable: controller,
+          builder: (context, value, child) {
+            return value.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear, size: 20),
+                    onPressed: () => controller.clear(),
+                  )
+                : const SizedBox.shrink();
+          },
         ),
       ),
       obscureText: obscure,
