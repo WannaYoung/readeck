@@ -86,9 +86,18 @@ class HomeController extends GetxController {
   Future<void> markBookmark(Bookmark bookmark, bool value) async {
     try {
       await provider.updateBookmarkStatus(bookmark.id, isMarked: value);
-      // 本地同步状态
-      bookmark = bookmark.copyWith(isMarked: value);
-      update(); // 或 articles.refresh()，视你的状态管理而定
+
+      // 如果在收藏列表中取消收藏，直接移除
+      if (filterIsMarked == true && !value) {
+        articles.removeWhere((b) => b.id == bookmark.id);
+      } else {
+        // 否则更新状态
+        final index = articles.indexWhere((b) => b.id == bookmark.id);
+        if (index != -1) {
+          articles[index] = articles[index].copyWith(isMarked: value);
+        }
+      }
+      articles.refresh();
       Get.snackbar('成功'.tr, value ? '已收藏'.tr : '已取消收藏'.tr);
     } catch (e) {
       Get.snackbar('失败'.tr, '操作失败'.tr);
@@ -98,8 +107,18 @@ class HomeController extends GetxController {
   Future<void> archiveBookmark(Bookmark bookmark, bool value) async {
     try {
       await provider.updateBookmarkStatus(bookmark.id, isArchived: value);
-      bookmark = bookmark.copyWith(isArchived: value);
-      update();
+
+      // 如果在归档列表中取消归档，直接移除
+      if (filterIsArchived == true && !value) {
+        articles.removeWhere((b) => b.id == bookmark.id);
+      } else {
+        // 否则更新状态
+        final index = articles.indexWhere((b) => b.id == bookmark.id);
+        if (index != -1) {
+          articles[index] = articles[index].copyWith(isArchived: value);
+        }
+      }
+      articles.refresh();
       Get.snackbar('成功'.tr, value ? '已归档'.tr : '已取消归档'.tr);
     } catch (e) {
       Get.snackbar('失败'.tr, '操作失败'.tr);
@@ -110,7 +129,7 @@ class HomeController extends GetxController {
     try {
       await provider.deleteBookmark(bookmark.id);
       articles.removeWhere((b) => b.id == bookmark.id);
-      update(); // 如果用 GetX 的 update
+      articles.refresh();
       Get.snackbar('成功'.tr, '已删除'.tr);
     } catch (e) {
       Get.snackbar('失败'.tr, '删除失败'.tr);

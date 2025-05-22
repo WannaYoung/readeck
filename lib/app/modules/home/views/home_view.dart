@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pie_menu/pie_menu.dart';
 import 'package:readeck/app/routes/app_pages.dart';
+import 'package:readeck/app/widgets/alert_dialog.dart';
 import '../controllers/home_controller.dart';
 import '../../../data/localization_service.dart';
 import '../../../widgets/article_card.dart';
@@ -127,8 +128,21 @@ class HomeView extends GetView<HomeController> {
                                 break;
                               case 2: // 分享
                                 break;
-                              case 3: // 删除
-                                controller.deleteBookmark(bookmark);
+                              case 3:
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomAlertDialog(
+                                    title: '确认删除',
+                                    description: '删除后文章无法恢复',
+                                    confirmButtonText: '删除',
+                                    confirmButtonColor:
+                                        const Color.fromARGB(255, 239, 72, 60),
+                                    onConfirm: () {
+                                      controller.deleteBookmark(bookmark);
+                                    },
+                                  ),
+                                );
+                                // 删除
                                 break;
                             }
                           },

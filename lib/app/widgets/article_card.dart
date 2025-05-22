@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:pie_menu/pie_menu.dart';
 import '../data/models/bookmark.dart';
 
@@ -25,30 +26,46 @@ class ArticleCard extends StatelessWidget {
       iconColor: Colors.white,
       backgroundColor: Color(0xFF555555),
     );
+    final favoriteButtonTheme = PieButtonTheme(
+      iconColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromARGB(255, 247, 49, 49),
+    );
+    final archiveButtonTheme = PieButtonTheme(
+      iconColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromARGB(255, 241, 197, 66),
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: PieMenu(
+        onToggle: (isOpen) async {
+          if (isOpen) {
+            await Haptics.vibrate(HapticsType.selection);
+          }
+        },
         actions: [
           PieAction(
-            tooltip: const Text('收藏'),
+            tooltip: Text(bookmark.isMarked ? '取消收藏' : '收藏'),
             onSelect: () => onPieAction?.call(0),
-            buttonTheme: pieButtonTheme,
+            buttonTheme:
+                bookmark.isMarked ? favoriteButtonTheme : pieButtonTheme,
             buttonThemeHovered: pieButtonThemeHovered,
-            child: const Icon(Icons.favorite), // Can be any widget
+            child: const Icon(Icons.favorite),
           ),
           PieAction(
-            tooltip: const Text('归档'),
+            tooltip: Text(bookmark.isArchived ? '取消归档' : '归档'),
             onSelect: () => onPieAction?.call(1),
-            buttonTheme: pieButtonTheme,
+            buttonTheme:
+                bookmark.isArchived ? archiveButtonTheme : pieButtonTheme,
             buttonThemeHovered: pieButtonThemeHovered,
-            child: const Icon(Icons.archive), // Can be any widget
+            child: const Icon(Icons.archive),
           ),
           PieAction(
             tooltip: const Text('分享'),
             onSelect: () => onPieAction?.call(2),
             buttonTheme: pieButtonTheme,
             buttonThemeHovered: pieButtonThemeHovered,
-            child: const Icon(Icons.share), // Can be any widget
+            child: const Icon(Icons.share),
           ),
           PieAction(
             tooltip: const Text('删除'),
@@ -58,7 +75,7 @@ class ArticleCard extends StatelessWidget {
               iconColor: Colors.white,
               backgroundColor: Color.fromARGB(255, 247, 49, 49),
             ),
-            child: const Icon(Icons.delete), // Can be any widget
+            child: const Icon(Icons.delete),
           ),
         ],
         child: Material(

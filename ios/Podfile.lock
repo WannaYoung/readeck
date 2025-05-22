@@ -1,5 +1,7 @@
 PODS:
   - Flutter (1.0.0)
+  - haptic_feedback (0.5.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -13,6 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - receive_sharing_intent (from `.symlinks/plugins/receive_sharing_intent/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -21,6 +24,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  haptic_feedback:
+    :path: ".symlinks/plugins/haptic_feedback/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   receive_sharing_intent:
@@ -32,6 +37,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  haptic_feedback: 8cb3ee0cb6b797946c2b0df9c99ebc8f7ed79c71
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   receive_sharing_intent: 79c848f5b045674ad60b9fea3bafea59962ad2c1
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
