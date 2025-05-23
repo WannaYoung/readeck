@@ -7,8 +7,7 @@ class LoginController extends GetxController {
   final AuthProvider provider;
   LoginController(this.provider);
 
-  final serverController =
-      TextEditingController(text: 'https://wyread.tocmcc.cn');
+  final serverController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final box = GetStorage();
